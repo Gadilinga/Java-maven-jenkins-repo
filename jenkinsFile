@@ -1,40 +1,31 @@
-// pipeline to automate the build of java application using maven 
-pipeline{
-   
+pipeline {
     agent any
 
-    tools{
-        maven 'maven 3.9.11' //needs a check from the jenkins server tools to validate the right version of plugin
+    tools {
+        maven 'maven 3.9.11' // must match Jenkins global tool config name
     }
 
-    stages{
-        
-        stage("build the JAR file"){
-            echo "build the JAR artifact using maven"
-            sh 'mvn package' 
+    stages {
+        stage("Build JAR File") {
+            steps {
+                echo "Building the JAR artifact using Maven"
+                sh 'mvn clean package'
+            }
         }
 
-        stage("build the container image"){
-            
-            echo " Building the docker image based on the artifact file "
+        stage("Build and Push Docker Image") {
+            steps {
+                echo "Building the Docker image based on the artifact file"
 
-            withCredentials([usernamePassword(credentialsId:'gitlab-credentials', usernameVariable:'USERNAME', passwordVariable:'PASSWORD')])
-     
-            sh 'docker build -t abdelhamedelbadawy/jenkinsbuiltapplication:jmaimage-1.0 \ -t abdelhamedelbadawy/jenkinsbuiltapplication:jmaimage-initial .'  
-            
-            sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin "
+                withCredentials([usernamePassword(credentialsId: 'dockerhubcredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'docker build -t abdelhamedelbadawy/jenkinsbuiltapplication:javamaven-1.0 -t abdelhamedelbadawy/jenkinsbuiltapplication:jmaimage-initial .'
 
-            sh 'docker push abdelhamedelbadawy/jenkinsbuiltapplication --all-tags'
+                    sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+
+                    sh 'docker push abdelhamedelbadawy/jenkinsbuiltapplication:javamaven-1.0'
+                    sh 'docker push abdelhamedelbadawy/jenkinsbuiltapplication:javamaven-initial'
+                }
+            }
         }
     }
-}
-
-
-
-
-
-
-
-
-
 }
