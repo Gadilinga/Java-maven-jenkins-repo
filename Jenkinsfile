@@ -18,12 +18,10 @@ pipeline {
                 echo "Building the Docker image based on the artifact file"
 
                 withCredentials([usernamePassword(credentialsId: 'dockerhubcredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh 'docker build -t abdelhamedelbadawy/jenkinsbuiltapplication:javamaven-1.0 -t abdelhamedelbadawy/jenkinsbuiltapplication:jmaimage-initial .'
-
+                    sh 'docker build -t abdelhamedelbadawy/jenkinsbuiltapplication:javamaven-1.0 .
                     sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
 
                     sh 'docker push abdelhamedelbadawy/jenkinsbuiltapplication:javamaven-1.0'
-                    sh 'docker push abdelhamedelbadawy/jenkinsbuiltapplication:javamaven-initial'
                 }
             }
         }
