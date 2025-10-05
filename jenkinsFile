@@ -1,11 +1,10 @@
-// pipeline to automate the build ,test and deploy java application using maven and deploy to cloud infrastructure
+// pipeline to automate the build of java application using maven 
 pipeline{
    
-   
-    agent any //implemnted on all jenkins server master&slaves
-    // define the tools(plugins) to user the shell commands inside our pipeline
+    agent any
+
     tools{
-        maven "maven1.03.9" //needs a check from the jenkins server tools to validate the right version of plugin
+        maven 'maven 3.9.11' //needs a check from the jenkins server tools to validate the right version of plugin
     }
 
     stages{
@@ -18,18 +17,17 @@ pipeline{
         stage("build the container image"){
             
             echo " Building the docker image based on the artifact file "
-            //using the wrapper to import credentials from jenkins API storgae
-            withCredentials([usernamePassword(credentialsId:'GitReoCredentials', usernameVariable:'USERNAME', passwordVariable:'PASSWORD')])
-            //build the docker image and login to the docker hub registery
+
+            withCredentials([usernamePassword(credentialsId:'gitlab-credentials', usernameVariable:'USERNAME', passwordVariable:'PASSWORD')])
+     
             sh 'docker build -t abdelhamedelbadawy/jenkinsbuiltapplication:jmaimage-1.0 \ -t abdelhamedelbadawy/jenkinsbuiltapplication:jmaimage-initial .'  
-            sh "echo $PASSWORD | docker login $registerURL -u $USERNAME --password-stdin "
-            //push the image with multiple tags to the docker hub
+            
+            sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin "
+
             sh 'docker push abdelhamedelbadawy/jenkinsbuiltapplication --all-tags'
         }
-
-
     }
-
+}
 
 
 
