@@ -1,27 +1,33 @@
 pipeline {
-    agent any
-
-    tools {
-        maven 'maven 3.9.11' // must match Jenkins global tool config name
-    }
+    agent none
 
     stages {
-        stage("Build JAR File") {
+        stage("Test the Java Software") {
             steps {
-                echo "Building the JAR artifact using Maven"
-                sh 'mvn clean package'
+                script {
+                    echo "Testing the application... executing the pipeline of branch ${env.BRANCH_NAME}"
+                }
             }
         }
 
-        stage("Build and Push Docker Image") {
+        stage("Build") {
+            when {
+                expression { env.BRANCH_NAME == 'master' }
+            }
             steps {
-                echo "Building the Docker image based on the artifact file"
+                script {
+                    echo "Building the application..."
+                }
+            }
+        }
 
-                withCredentials([usernamePassword(credentialsId: 'dockerhubcredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh "docker build -t abdelhamedelbadawy/jenkinsbuiltapplication:javamaven-1.0 ."
-                    sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
-
-                    sh 'docker push abdelhamedelbadawy/jenkinsbuiltapplication:javamaven-1.0'
+        stage("Deploy") {
+            when {
+                expression { env.BRANCH_NAME == 'master' }
+            }
+            steps {
+                script {
+                    echo "Deploying the application..."
                 }
             }
         }
