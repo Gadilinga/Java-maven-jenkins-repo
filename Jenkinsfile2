@@ -42,7 +42,7 @@ pipeline{
             }
                 steps {
                     script {
-                        go.testApp()
+                        gv.testApp()
                        
                     }
                 } 
