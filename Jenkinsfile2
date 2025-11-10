@@ -50,7 +50,7 @@ pipeline{
             }
       
         stage("deploy") {
-            input {
+            //input {
             //     message "Deploy to ${params.DEPLOY_ENV}?"
             //     ok "Done"
             //     parameters {
