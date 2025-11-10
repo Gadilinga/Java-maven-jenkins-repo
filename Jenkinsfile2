@@ -43,7 +43,7 @@ pipeline{
                 steps {
                     script {
                         go.testApp()
-                        echo "Testing the application...."
+                       
                     }
                 } 
            
@@ -53,8 +53,8 @@ pipeline{
             steps {
                 script {
                     gv.deplyApp()
-                    echo "Deploying the application..."
-                    echo "deploying version ${params.VERSION} to selected environment"
+                    //echo "Deploying the application..."
+                   // echo "deploying version ${params.VERSION} to selected environment"
                     //echo "deploying to server with credentials ${SERVER_CREDENTIALS}"
                     //sh "${SERVER_CREDENTIALS}"
                     //withCredentials([usernamePassword(credentialsId: 'server-credentials-id', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
