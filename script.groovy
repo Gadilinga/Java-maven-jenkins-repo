@@ -12,4 +12,4 @@ def deplyApp () {
     echo "deploying version ${params.VERSION} to selected environment"
 }
 
-retunr this
+return this
