@@ -1,17 +1,14 @@
-# FROM openjdk:8-jre-alpine
+# Use a lightweight JRE base image
+FROM openjdk:8-jre-alpine
 
-# EXPOSE 8080
-
-# COPY ./target/java-maven-app-*.jar /usr/app/
-# WORKDIR /usr/app
-
-# CMD java -jar java-maven-app-*.jar
-
-FROM openjdk:8u412-jre-alpine
-
-EXPOSE 8080
-
-COPY ./target/java-maven-app-*.jar /usr/app/
+# Set working directory
 WORKDIR /usr/app
 
-CMD java -jar java-maven-app-*.jar
+# Copy the built JAR file into the container
+COPY ./target/java-maven-app-*.jar app.jar
+
+# Expose the application port
+EXPOSE 8080
+
+# Run the application
+CMD ["java", "-jar", "app.jar"]
