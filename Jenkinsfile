@@ -19,10 +19,10 @@ pipeline{
                 script {
                     echo "Building Docker image..."
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-login', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                    sh 'docker build -t waseemdevopsdemp/mywp_site .'
-                    //sh 'docker build -t nanajanashia/demo-app:jma-2.0 .'
+                    //sh 'docker build -t waseemdevopsdemp/mywp_site .'
+                    sh 'docker build -t nanajanashia/k8s-demo-app .'
                     sh "echo $PASS | docker login -u $DOCKERHUB_USERNAME  --password-stdin"
-                    sh 'docker push nanajanashia/demo-app:jam-2.0 .'
+                    sh 'docker push  waseemdevopsdemp/demo-app:jam-2.0 .'
                 }
             }
         }
