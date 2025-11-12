@@ -10,7 +10,7 @@ def buildImage () {
             usernameVariable: 'DOCKERHUB_USERNAME',
             passwordVariable: 'DOCKERHUB_PASSWORD'
         )]) {
-        sh 'docker build -t waseemdevopsdemp/k8s-demo-app:latest .'
+        sh 'docker build -t waseemdevopsdemp/k8s-demo-app:v0.2 .'
         sh "echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin"
         sh "docker push waseemdevopsdemp/k8s-demo-app:v0.2"
     }
