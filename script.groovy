@@ -1,15 +1,13 @@
-def buildApp () {
-    echo "building the application..."
+def buildApp() {
+    echo "Building the application..."
+    // Add build logic here
 }
 
-def testApp () {
-    echo "testing the application..."
+def testApp() {
+    echo "Testing the application.."    
 }
 
-def deplyApp () {
-    
+def deployApp() {
     echo "Deploying the application..."
-    echo "deploying version ${params.VERSION} to selected environment"
-}
 
-return this
+}
