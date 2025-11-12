@@ -53,7 +53,7 @@ pipeline {
         //     }
         // }
         stage("deploy") {
-            stapes {
+            steps {
                 script {
                     // echo "Depploying the application...."
                     gv.deployApp()
