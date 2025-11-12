@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     gv = load "script2.groovy"
-                    gv.printMsg()
+                    //gv.printMsg()
                 }
             }
         }
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                     // echo "Depploying the application...."
-                    gv.deployApp()
+                    gv.deplyApp()
                 }
             }
         }

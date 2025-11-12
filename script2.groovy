@@ -6,7 +6,7 @@ def buildApp () {
 def buildImage () {
     echo "Building the Docker image ..."
         withCredentials([usernamePassword(
-            credentiailsId: 'docker-hub-login',
+            credentialsId: 'docker-hub-login',
             usernameVariable: 'DOCKERHUB_USERNAME',
             passwordVariable: 'DOCKERHUB_PASSWORD'
         )]) {
