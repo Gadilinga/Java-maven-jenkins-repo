@@ -18,7 +18,7 @@ def buildImage () {
 }
 
 def deplyApp () {
-    echo "Depploying the application...."
+    echo "Depploying the docker application...."
 } 
    
 return this
