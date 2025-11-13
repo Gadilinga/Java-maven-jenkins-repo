@@ -1,8 +1,14 @@
-FROM openjdk:8-jre-alpine
+# Use maintained lightweight JRE base
+FROM eclipse-temurin:8-jre-alpine
 
-EXPOSE 8080
-
-COPY ./target/java-maven-app-*.jar /usr/app/
+# Set working directory
 WORKDIR /usr/app
 
-CMD java -jar java-maven-app-*.jar
+# Copy the built JAR into container
+COPY ./target/java-maven-app-*.jar app.jar
+
+# Expose application port
+EXPOSE 8080
+
+# Run the app
+CMD ["java", "-jar", "app.jar"]
